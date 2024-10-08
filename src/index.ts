@@ -4,23 +4,33 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
-import connectDB from './config/db'; // Import de connectDB
+import connectDB from './config/db';
+
+import authRoutes from './routes/auth';
 
 dotenv.config();
 
 const app = express();
 
-connectDB(); // Connexion à MongoDB
+// Connexion à la base de données
+connectDB();
 
+// Middlewares
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); // Très important pour parser le JSON dans les requêtes
 
-// Définir une route de base pour tester le serveur
+// Enregistrement des routes
+app.use('/api/auth', authRoutes);
+
 app.get('/', (req, res) => {
   res.send('Bienvenue sur l\'API F1 Reaction Timer!');
 });
 
-// Démarrer le serveur
+// Gestion des erreurs 404
+app.use((req, res) => {
+  res.status(404).json({ message: 'Route non trouvée' });
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur le port ${PORT}`);
