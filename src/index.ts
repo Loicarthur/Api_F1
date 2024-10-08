@@ -1,17 +1,17 @@
 // src/index.ts
 
-// Importation des modules nécessaires
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
-// Charger les variables d'environnement depuis le fichier .env
+import connectDB from './config/db'; // Import de connectDB
+
 dotenv.config();
 
-// Créer une instance de l'application Express
 const app = express();
 
-// Middlewares
+connectDB(); // Connexion à MongoDB
+
 app.use(cors());
 app.use(express.json());
 
