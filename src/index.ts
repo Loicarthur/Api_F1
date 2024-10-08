@@ -8,6 +8,7 @@ import connectDB from './config/db';
 
 import authRoutes from './routes/auth';
 
+import timerRoutes from './routes/timer';
 dotenv.config();
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(express.json()); // Très important pour parser le JSON dans les requêt
 
 // Enregistrement des routes
 app.use('/api/auth', authRoutes);
+app.use('/api/timer', timerRoutes);
 
 app.get('/', (req, res) => {
   res.send('Bienvenue sur l\'API F1 Reaction Timer!');
