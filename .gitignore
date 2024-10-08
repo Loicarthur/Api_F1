@@ -119,9 +119,15 @@ dist
 # TernJS port file
 .tern-port
 
-# .gitignore
-node_modules
+# Node.js
+node_modules/
+
+# TypeScript
+dist/
+
+# Environnement
 .env
+
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
