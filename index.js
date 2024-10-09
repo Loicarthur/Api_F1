@@ -1,11 +1,11 @@
 // index.js
 
 // Charger les variables d'environnement depuis le fichier .env
-require('dotenv').config();
+require("dotenv").config();
 
 // Importer les modules nécessaires
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 
 // Créer une instance de l'application Express
 const app = express();
