@@ -1,9 +1,9 @@
-// src/controllers/timerController.ts
-
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import Timer from '../models/Timer';
+import { AuthRequest } from '../middleware/auth';
 
-export const addTime = async (req: Request, res: Response): Promise<void> => {
+// Fonction pour ajouter un temps de réaction
+export const addTime = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { time } = req.body;
     const userId = req.user?.userId;
@@ -26,7 +26,8 @@ export const addTime = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const getUserTimes = async (req: Request, res: Response): Promise<void> => {
+// Fonction pour obtenir les temps de l'utilisateur connecté
+export const getUserTimes = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user?.userId;
 
@@ -43,17 +44,18 @@ export const getUserTimes = async (req: Request, res: Response): Promise<void> =
   }
 };
 
-export const getAllTimes = async (req: Request, res: Response): Promise<void> => {
+// Fonction pour obtenir tous les temps de réaction (administrateur uniquement)
+export const getAllTimes = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    if (!req.user?.role) {
+    if (req.user && req.user.role !== false) {
       res.status(403).json({ message: 'Accès refusé.' });
       return;
     }
 
-    const times = await Timer.find().populate('user_id', 'email');
+    const allTimes = await Timer.find().populate('user_id', 'email');
 
-    res.json(times);
+    res.status(200).json(allTimes);
   } catch (error) {
-    res.status(500).json({ message: 'Erreur serveur.' });
+    res.status(500).json({ message: 'Erreur lors de la récupération des temps de réaction.' });
   }
 };

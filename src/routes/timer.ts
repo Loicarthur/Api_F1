@@ -10,7 +10,7 @@ const router = Router();
 
 // Route pour ajouter un temps de réaction
 router.post(
-  '/',
+  '/submit-reaction-time',
   auth,
   [check('time', 'Le temps est requis et doit être un nombre').isNumeric()],
   (req: Request, res: Response): void => {
